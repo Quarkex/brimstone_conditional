@@ -24,7 +24,7 @@
   Known map operators are the logic gates `and`, `or`, `xor`, `not`, `nor` and
   `xnor`, the comparison operators `eq`, `neq`, `gt`, `ge`, `lt` and `le`, the
   check operators `in` and `match`, the disambiguator `cond`, the scape hatch
-  `fn`, and the utility operators `var`, `count`, `each` and `sum`.
+  `fn`, and the utility operators `var`, `count`, `cat`, `each` and `sum`.
 
   The comparison operators assume that the first element is the topic that we
   are comparing, and any other element is what are we comparing it to,
@@ -55,14 +55,30 @@
   `true` after checking its condition.
 
   The utility operators will perform common basic tasks, usually on the state
-  provided (an empty map as default) to fetch data. `var` will perform a
-  `Map.get/2` using the provided atom or string as key. `each` will turn itself
-  into a list containing all values of the state map which had a key begining
-  with the atom or string provided, followed with an index inside brackets
-  (like the accessor syntax). `count` will return the size of the provided
-  list, and `sum` will asume the provided list contains numbers and will add
-  them up. All these tasks could be handled as functions, but they are so
-  common that including them make the struct way more usable.
+  provided (an empty map as default) to fetch data. All these tasks could be
+  handled as functions, but they are so common that including them make the
+  struct way more usable.
+
+  `var` will perform a `Map.get/2` using the provided atom or string as key.
+
+  `each` will turn itself into a list containing all values of the state map
+  which had a key begining with the atom or string provided, followed with an
+  index inside brackets (like the accessor syntax).
+
+  `count` will return the size of the provided list.
+
+  `sum` will asume the provided list contains numbers and will add them up.
+
+  `cat` will try to catenate the elements of the provided argument list
+  following a DWIM approach. To do so it will run a reduce function on the list
+  and will take into account the data types of both the accumulator that is
+  being built and the element we are trying to add. I.E: catenating two
+  strings, two lists or two tuples together will simply join them, catenating a
+  keyword list to a map will add the keywords to the map, but catenating a map
+  to a list (keyword or not) will simply append the map as the last element of
+  the list, and so on. If there is not a known approach to what we are trying
+  to catenate, this operator will try to cast both elements to string before
+  joining them.
 
   Any other operator that receives a list as a parameter will be handled as an
   `and` operation of the result of applying the specfied operator to each

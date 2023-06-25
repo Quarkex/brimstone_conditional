@@ -13,7 +13,7 @@ defmodule BrimstoneConditional do
   @valid_condition_args ~w{
     and nand or xor not nor xnor
     eq neq gt ge lt le in match
-    cond fn var count each sum
+    cond fn var count each sum cat
   }a
 
   defstruct Enum.map(@valid_condition_args, &{&1, nil})
@@ -215,6 +215,60 @@ defmodule BrimstoneConditional do
 
   defp digest({:count, variables}, state, false),
     do: Enum.count(digest(variables, state))
+
+  defp digest({:cat, variables}, state, false) when is_list(variables) do
+    Enum.reduce(digest(variables, state), fn link, chain ->
+      cond do
+        is_nil(link) ->
+          chain
+
+        is_nil(chain) ->
+          link
+
+        is_boolean(chain) ->
+          chain && link
+
+        is_bitstring(chain) ->
+          "#{chain}#{link}"
+
+        is_list(chain) && is_list(link) ->
+          chain ++ link
+
+        is_list(chain) ->
+          chain ++ [link]
+
+        is_map(chain) && is_map(link) ->
+          Map.merge(chain, link)
+
+        is_map(chain) && Keyword.keyword?(link) ->
+          Map.merge(chain, Map.new(link))
+
+        is_integer(chain) && is_integer(link) ->
+          String.to_integer("#{chain}#{link}")
+
+        is_float(chain) && is_integer(link) ->
+          String.to_float("#{chain}#{link}")
+
+        is_float(chain) && is_float(link) ->
+          String.to_float("#{chain}" <> String.replace("#{link}", ".", ""))
+
+        is_tuple(chain) && is_tuple(link) ->
+          List.to_tuple(Tuple.to_list(chain) ++ Tuple.to_list(link))
+
+        is_tuple(chain) && is_list(link) ->
+          List.to_tuple(Tuple.to_list(chain) ++ link)
+
+        is_tuple(chain) ->
+          Tuple.append(chain, link)
+
+        true ->
+          "#{chain}#{link}"
+      end
+    end)
+  end
+
+  defp digest({:cat, variable}, state, false),
+    do: digest({:cat, [variable]}, state, false)
 
   defp digest({:each, key}, state, false)
        when is_map(state) and (is_atom(key) or is_bitstring(key)) do
