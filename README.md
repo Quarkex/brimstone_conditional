@@ -1,10 +1,11 @@
 # Brimstone Conditional
-
+  <!-- INTRODUCTION START -->
   Evaluate conditions defined in a logical structure.
 
   This module allows to evaluate complex tree conditional structures and digest
-  them to get a final output. The main function is `evaluate/2` which will digest
-  the struct and return the values with the conditional switches resolved.
+  them to get a final output. The main function is `evaluate/2` which will
+  digest the struct and return the values with the conditional switches
+  resolved.
 
   The struct itself can be converted to a string to be stored, using
   `:erlang.term_to_binary/1` and `Base.encode64/1` under the hood. The struct
@@ -12,11 +13,13 @@
   operation. These strings include a version at the begining to acomodate the
   possibility of altering this struct in the future and allowing migrations
   from previous stringified conditionals.
-
-  It uses recursion to evaluate its parameters. A plain boolean will return
-  itself, a list will be assumed to be an `and` structure, and a map or keyword
-  list will traverse itself as a list of key/value tuples, using the key as the
-  operation and the value as parameters.
+  <!-- INTRODUCTION END -->
+  <!-- USAGE START -->
+  The struct uses recursion to evaluate its parameters. A
+  plain boolean will return itself, a list will be assumed
+  to be an `and` structure, and a map or keyword list will
+  traverse itself as a list of key/value tuples, using the
+  key as the operation and the value as parameters.
 
   Known map operators are the logic gates `and`, `or`, `xor`, `not`, `nor` and
   `xnor`, the comparison operators `eq`, `neq`, `gt`, `ge`, `lt` and `le`, the
@@ -71,11 +74,13 @@
   check the arity of the relevant function. If the arity is equal to the
   arguments provided it will call it only with the provided arguments, and
   prepend the entire state to the argument list otherwise.
+  <!-- USAGE END -->
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `brimstone_conditional` to your list of dependencies in `mix.exs`:
+It is [available in Hex](https://hexdocs.pm/brimstone_conditional), and the
+package can be installed by adding `brimstone_conditional` to your list of
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
