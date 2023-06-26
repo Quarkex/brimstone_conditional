@@ -189,6 +189,10 @@ defmodule ConditionalTest do
       assert Conditional.evaluate(%Conditional{match: ["FOO", {"foo", ""}, ~r/^f/i]}) == false
     end
 
+    test "match cast to string if it doesn't recognize the first element" do
+      assert Conditional.evaluate(%Conditional{match: [1, "1"]}) == true
+    end
+
     test "cond returns the second element of the first tuple whose first element is true" do
       assert Conditional.evaluate(%Conditional{cond: [{false, :a}, {true, :b}]}) == :b
       assert Conditional.evaluate(%Conditional{cond: [{true, :a}, {true, :b}]}) == :a
