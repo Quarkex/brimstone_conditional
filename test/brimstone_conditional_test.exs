@@ -264,6 +264,100 @@ defmodule ConditionalTest do
       assert Conditional.evaluate(%Conditional{sum: [1, 2, 3]}) == 6
     end
 
+    test "cat catenates a list of strings" do
+      assert Conditional.evaluate(%Conditional{cat: ["a", "b", "c"]}) == "abc"
+    end
+
+    test "cat ignores a nil chain" do
+      assert Conditional.evaluate(%Conditional{cat: [nil, "a", "b", "c"]}) == "abc"
+    end
+
+    test "cat ignores a nil link" do
+      assert Conditional.evaluate(%Conditional{cat: ["a", "b", nil, "c"]}) == "abc"
+    end
+
+    test "cat performs the and operation while dealing with booleans" do
+      assert Conditional.evaluate(%Conditional{cat: [true, true, true]}) == true
+      assert Conditional.evaluate(%Conditional{cat: [true, false, true]}) == false
+    end
+
+    test "cat joins two lists together" do
+      assert Conditional.evaluate(%Conditional{cat: [["a", "b"], ["c", "d"]]}) ==
+               ["a", "b", "c", "d"]
+    end
+
+    test "cat push items into lists" do
+      assert Conditional.evaluate(%Conditional{cat: [["a", "b", "c"], "d"]}) ==
+               ["a", "b", "c", "d"]
+    end
+
+    test "cat merges two maps together" do
+      assert Conditional.evaluate(%Conditional{
+               cat: [%{"a" => 0, "c" => 3}, %{"a" => 1, "b" => 2}]
+             }) == %{"a" => 1, "b" => 2, "c" => 3}
+    end
+
+    test "cat merges keyword values into a map" do
+      assert Conditional.evaluate(%Conditional{
+               cat: [%{a: 0, c: 3}, [a: 1, b: 2]]
+             }) == %{a: 1, b: 2, c: 3}
+    end
+
+    test "cat joins integers together" do
+      assert Conditional.evaluate(%Conditional{cat: [1, 2, 3]}) == 123
+    end
+
+    test "cat joins floats and integers together" do
+      assert Conditional.evaluate(%Conditional{cat: [1.0, 2, 3]}) == 1.023
+    end
+
+    test "cat joins floats together, ignoring dots from the tail arguments" do
+      assert Conditional.evaluate(%Conditional{cat: [1.0, 2.0, 3.5]}) == 1.0235
+    end
+
+    test "cat merges two tuples together" do
+      assert Conditional.evaluate(%Conditional{
+               cat: [{"a", "b"}, {"c", "d"}]
+             }) == {"a", "b", "c", "d"}
+    end
+
+    test "cat do not merge a list and a tuple, pushing the list in the tuple instead" do
+      assert Conditional.evaluate(%Conditional{
+               cat: [{"a", "b"}, ["c", "d"]]
+             }) == {"a", "b", ["c", "d"]}
+    end
+
+    test "cat do not merge a tuple and a list, pushing the tuple in the list instead" do
+      assert Conditional.evaluate(%Conditional{
+               cat: [["a", "b"], {"c", "d"}]
+             }) == ["a", "b", {"c", "d"}]
+    end
+
+    test "cat push items into tuples" do
+      assert Conditional.evaluate(%Conditional{cat: [{"a", "b", "c"}, "d"]}) ==
+               {"a", "b", "c", "d"}
+    end
+
+    test "cat cast anything else to string and join those" do
+      assert Conditional.evaluate(%Conditional{cat: [:a, :b, 1]}) == "ab1"
+    end
+
+    test "interpolate replaces marked strings with provided values" do
+      assert Conditional.evaluate(%Conditional{
+               interpolate: [
+                 "hello %{thing}, it's %{1} to see you",
+                 {"thing", "world"},
+                 "good"
+               ]
+             }) == "hello world, it's good to see you"
+    end
+
+    test "interpolate ignores anything else" do
+      assert Conditional.evaluate(%Conditional{
+               interpolate: "hello world"
+             }) == "hello world"
+    end
+
     test "multiple nested operations and recursivity are supported" do
       conditional = %Conditional{
         eq: [
