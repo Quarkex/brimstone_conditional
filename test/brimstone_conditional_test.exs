@@ -1,4 +1,4 @@
-defmodule ConditionalTest do
+defmodule BrimstoneConditionalTest do
   use ExUnit.Case
   doctest BrimstoneConditional
 
