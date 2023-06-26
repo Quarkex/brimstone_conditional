@@ -7,8 +7,8 @@ defmodule BrimstoneConditional.MixProject do
     [
       app: :brimstone_conditional,
       description: "Logic holding structs",
-      version: "0.1.0",
-      elixir: "~> 1.15-dev",
+      version: "0.1.1",
+      elixir: ">= 1.14.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
@@ -28,7 +28,7 @@ defmodule BrimstoneConditional.MixProject do
       maintainers: ["Manlio García"],
       licenses: ["MIT"],
       links: %{"GitHub" => @scm_url},
-      files: ~w(lib LICENSE.md mix.exs README.md .formatter.exs)
+      files: ~w(lib LICENSE.md mix.exs README.md CHANGELOG.md .formatter.exs)
     ]
   end
 

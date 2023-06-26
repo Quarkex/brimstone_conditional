@@ -111,7 +111,7 @@ dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:brimstone_conditional, "~> 0.1.0"}
+    {:brimstone_conditional, "~> 0.1.1"}
   ]
 end
 ```
