@@ -24,7 +24,8 @@
   Known map operators are the logic gates `and`, `or`, `xor`, `not`, `nor` and
   `xnor`, the comparison operators `eq`, `neq`, `gt`, `ge`, `lt` and `le`, the
   check operators `in` and `match`, the disambiguator `cond`, the scape hatch
-  `fn`, and the utility operators `var`, `count`, `cat`, `each` and `sum`.
+  `fn`, and the utility operators `var`, `count`, `cat`, `interpolate`, `each`
+  and `sum`.
 
   The comparison operators assume that the first element is the topic that we
   are comparing, and any other element is what are we comparing it to,
@@ -79,6 +80,15 @@
   the list, and so on. If there is not a known approach to what we are trying
   to catenate, this operator will try to cast both elements to string before
   joining them.
+
+  `interpolate` expects a list where the first element is a string and the rest
+  are interpolation arguments. Interpolation arguments may be key-value pairs
+  or simple values. The string will be reduced searching for each element in
+  the argument list following gettext conventions. If the pattern `%{keyname}`
+  is fount, it will be replaced by `value`. For values that do not have a key,
+  the reduce function will match the ordinal (starting at one) (I.E: `%{1}`,
+  `%{2}`, etc.) of a list composed of all arguments that are not key-value
+  pairs.
 
   Any other operator that receives a list as a parameter will be handled as an
   `and` operation of the result of applying the specfied operator to each

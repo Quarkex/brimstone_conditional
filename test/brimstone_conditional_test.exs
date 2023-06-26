@@ -15,13 +15,13 @@ defmodule ConditionalTest do
   describe "Conditional" do
     test "to_string behaviour serializes correctly a conditional" do
       assert String.Chars.to_string(%Conditional{and: [true, true, true]}) ==
-               "module:Elixir.BrimstoneConditional;version:0.1.0;g3QAAAAXZAAKX19zdHJ1Y3RfX2QAG0VsaXhpci5Ccmltc3RvbmVDb25kaXRpb25hbGQAA2FuZGwAAAADZAAEdHJ1ZWQABHRydWVkAAR0cnVlamQAA2NhdGQAA25pbGQABGNvbmRkAANuaWxkAAVjb3VudGQAA25pbGQABGVhY2hkAANuaWxkAAJlcWQAA25pbGQAAmZuZAADbmlsZAACZ2VkAANuaWxkAAJndGQAA25pbGQAAmluZAADbmlsZAACbGVkAANuaWxkAAJsdGQAA25pbGQABW1hdGNoZAADbmlsZAAEbmFuZGQAA25pbGQAA25lcWQAA25pbGQAA25vcmQAA25pbGQAA25vdGQAA25pbGQAAm9yZAADbmlsZAADc3VtZAADbmlsZAADdmFyZAADbmlsZAAEeG5vcmQAA25pbGQAA3hvcmQAA25pbA=="
+               "module:Elixir.BrimstoneConditional;version:0.1.0;g3QAAAAYZAAKX19zdHJ1Y3RfX2QAG0VsaXhpci5Ccmltc3RvbmVDb25kaXRpb25hbGQAA2FuZGwAAAADZAAEdHJ1ZWQABHRydWVkAAR0cnVlamQAA2NhdGQAA25pbGQABGNvbmRkAANuaWxkAAVjb3VudGQAA25pbGQABGVhY2hkAANuaWxkAAJlcWQAA25pbGQAAmZuZAADbmlsZAACZ2VkAANuaWxkAAJndGQAA25pbGQAAmluZAADbmlsZAALaW50ZXJwb2xhdGVkAANuaWxkAAJsZWQAA25pbGQAAmx0ZAADbmlsZAAFbWF0Y2hkAANuaWxkAARuYW5kZAADbmlsZAADbmVxZAADbmlsZAADbm9yZAADbmlsZAADbm90ZAADbmlsZAACb3JkAANuaWxkAANzdW1kAANuaWxkAAN2YXJkAANuaWxkAAR4bm9yZAADbmlsZAADeG9yZAADbmls"
     end
 
     test "from_string function deserializes correctly a conditional" do
       assert %Conditional{and: [true, true, true]} ==
                Conditional.from_string(
-                 "module:Elixir.BrimstoneConditional;version:0.1.0;g3QAAAAXZAAKX19zdHJ1Y3RfX2QAG0VsaXhpci5Ccmltc3RvbmVDb25kaXRpb25hbGQAA2FuZGwAAAADZAAEdHJ1ZWQABHRydWVkAAR0cnVlamQAA2NhdGQAA25pbGQABGNvbmRkAANuaWxkAAVjb3VudGQAA25pbGQABGVhY2hkAANuaWxkAAJlcWQAA25pbGQAAmZuZAADbmlsZAACZ2VkAANuaWxkAAJndGQAA25pbGQAAmluZAADbmlsZAACbGVkAANuaWxkAAJsdGQAA25pbGQABW1hdGNoZAADbmlsZAAEbmFuZGQAA25pbGQAA25lcWQAA25pbGQAA25vcmQAA25pbGQAA25vdGQAA25pbGQAAm9yZAADbmlsZAADc3VtZAADbmlsZAADdmFyZAADbmlsZAAEeG5vcmQAA25pbGQAA3hvcmQAA25pbA=="
+                 "module:Elixir.BrimstoneConditional;version:0.1.0;g3QAAAAYZAAKX19zdHJ1Y3RfX2QAG0VsaXhpci5Ccmltc3RvbmVDb25kaXRpb25hbGQAA2FuZGwAAAADZAAEdHJ1ZWQABHRydWVkAAR0cnVlamQAA2NhdGQAA25pbGQABGNvbmRkAANuaWxkAAVjb3VudGQAA25pbGQABGVhY2hkAANuaWxkAAJlcWQAA25pbGQAAmZuZAADbmlsZAACZ2VkAANuaWxkAAJndGQAA25pbGQAAmluZAADbmlsZAALaW50ZXJwb2xhdGVkAANuaWxkAAJsZWQAA25pbGQAAmx0ZAADbmlsZAAFbWF0Y2hkAANuaWxkAARuYW5kZAADbmlsZAADbmVxZAADbmlsZAADbm9yZAADbmlsZAADbm90ZAADbmlsZAACb3JkAANuaWxkAANzdW1kAANuaWxkAAN2YXJkAANuaWxkAAR4bm9yZAADbmlsZAADeG9yZAADbmls"
                )
     end
 

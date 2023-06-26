@@ -13,7 +13,8 @@ defmodule BrimstoneConditional do
   @valid_condition_args ~w{
     and nand or xor not nor xnor
     eq neq gt ge lt le in match
-    cond fn var count each sum cat
+    cond fn var count each sum
+    cat interpolate
   }a
 
   defstruct Enum.map(@valid_condition_args, &{&1, nil})
@@ -216,7 +217,7 @@ defmodule BrimstoneConditional do
   defp digest({:count, variables}, state, false),
     do: Enum.count(digest(variables, state))
 
-  defp digest({:cat, variables}, state, false) when is_list(variables) do
+  defp digest({:cat, variables}, state, false) do
     Enum.reduce(digest(variables, state), fn link, chain ->
       cond do
         is_nil(link) ->
@@ -267,8 +268,32 @@ defmodule BrimstoneConditional do
     end)
   end
 
-  defp digest({:cat, variable}, state, false),
-    do: digest({:cat, [variable]}, state, false)
+  defp digest({:interpolate, variables}, state, false) do
+    case digest(variables, state) do
+      [string | replacements] ->
+        Enum.reduce(
+          digest(replacements, state),
+          %{output: digest(string, state), free_variables_seen: 0},
+          fn variable, acc ->
+            case variable do
+              {key, value} ->
+                new_output = String.replace(acc[:output], "%{#{key}}", "#{value}")
+                %{acc | output: new_output}
+
+              value ->
+                new_output =
+                  String.replace(acc[:output], "%{#{acc.free_variables_seen + 1}}", "#{value}")
+
+                %{acc | output: new_output, free_variables_seen: acc.free_variables_seen + 1}
+            end
+          end
+        )
+        |> Map.get(:output)
+
+      anything_else ->
+        anything_else
+    end
+  end
 
   defp digest({:each, key}, state, false)
        when is_map(state) and (is_atom(key) or is_bitstring(key)) do
