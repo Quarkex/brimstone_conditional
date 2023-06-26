@@ -256,9 +256,6 @@ defmodule BrimstoneConditional do
         is_tuple(chain) && is_tuple(link) ->
           List.to_tuple(Tuple.to_list(chain) ++ Tuple.to_list(link))
 
-        is_tuple(chain) && is_list(link) ->
-          List.to_tuple(Tuple.to_list(chain) ++ link)
-
         is_tuple(chain) ->
           Tuple.append(chain, link)
 
