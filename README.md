@@ -99,7 +99,12 @@
   function_name, arg_list}` or `{function, arg_list}`. In any case, it will
   check the arity of the relevant function. If the arity is equal to the
   arguments provided it will call it only with the provided arguments, and
-  prepend the entire state to the argument list otherwise.
+  prepend the entire state to the argument list otherwise. If the first element
+  of the provided list is a string, this operator will wrap it around the `fn
+  ... end` syntax for anonymous functions, enabling you to pass a string
+  encoded function begining with `arg1, arg2, ..., argn -> `, or simply `-> `
+  if the function does not have arguments. Please be very careful with this
+  operator, as it may execute arbitrary code in the context of the erlang VM.
   <!-- USAGE END -->
 
 ## Installation
@@ -111,7 +116,7 @@ dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:brimstone_conditional, "~> 0.1.1"}
+    {:brimstone_conditional, "~> 0.1.2"}
   ]
 end
 ```

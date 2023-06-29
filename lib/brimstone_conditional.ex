@@ -319,8 +319,17 @@ defmodule BrimstoneConditional do
     digest({:fn, [Function.capture(module, name, arity)] ++ args}, state)
   end
 
-  defp digest({:fn, function}, state, false) when is_function(function),
+  defp digest({:fn, function}, state, false) when is_function(function) or is_bitstring(function),
     do: digest({:fn, [function]}, state)
+
+  defp digest({:fn, [function | args]}, state, false)
+       when is_bitstring(function) and is_list(args),
+       do:
+         digest(
+           {:fn, [elem(Code.eval_string("fn " <> function <> " end"), 0) | args]},
+           state,
+           false
+         )
 
   defp digest({:fn, [function | args]}, state, false)
        when is_function(function) and is_list(args) do

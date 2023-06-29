@@ -238,6 +238,10 @@ defmodule BrimstoneConditionalTest do
       assert Conditional.evaluate(%Conditional{fn: fn -> true end}) == true
     end
 
+    test "fn calls by passing a string encoded function" do
+      assert Conditional.evaluate(%Conditional{fn: "-> true"}) == true
+    end
+
     test "fn calls by passing a function with state as its first argument" do
       assert Conditional.evaluate(
                %Conditional{fn: fn state -> state[:foo] end},

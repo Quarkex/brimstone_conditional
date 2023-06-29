@@ -1,5 +1,12 @@
 # Changelog for v0.x
 
+## v0.1.2 (2023-06-29)
+
+### Enhancements
+
+  * [BrimstoneConditional] Add support for string encoded functions.
+  * [BrimstoneConditionalTest] Add string encoded function tests.
+
 ## v0.1.1 (2023-06-26)
 
 ### Enhancements
