@@ -1,5 +1,12 @@
 # Changelog for v0.x
 
+## v0.1.3 (2023-07-03)
+
+### Enhancements
+
+  * [BrimstoneConditional] Add support for nested conditionals outside lists.
+  * [BrimstoneConditionalTest] Add extra coverage for 'not' operator in tests.
+
 ## v0.1.2 (2023-06-29)
 
 ### Enhancements

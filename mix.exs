@@ -7,7 +7,7 @@ defmodule BrimstoneConditional.MixProject do
     [
       app: :brimstone_conditional,
       description: "Logic holding structs",
-      version: "0.1.2",
+      version: "0.1.3",
       elixir: ">= 1.14.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
