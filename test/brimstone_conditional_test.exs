@@ -71,6 +71,14 @@ defmodule BrimstoneConditionalTest do
       assert Conditional.evaluate(%Conditional{not: [true]}) == false
     end
 
+    test "not supports conditionals lists" do
+      assert Conditional.evaluate(%Conditional{not: [%Conditional{and: [true, true]}]}) == false
+    end
+
+    test "not supports conditionals" do
+      assert Conditional.evaluate(%Conditional{not: %Conditional{and: [true, true]}}) == false
+    end
+
     test "nor returns true if all conditions are false" do
       assert Conditional.evaluate(%Conditional{nor: [false, false, false]}) == true
     end

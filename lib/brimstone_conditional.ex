@@ -345,25 +345,25 @@ defmodule BrimstoneConditional do
     do: apply_cond_switch({:cond, digest(value, state)}, state)
 
   defp digest({:not, item}, state, false),
-    do: is_met?({:not, item}, state)
+    do: is_met?({:not, digest(item, state)}, state)
 
   defp digest({:and, list}, state, false),
-    do: is_met?({:and, list}, state)
+    do: is_met?({:and, digest(list, state)}, state)
 
   defp digest({:nand, list}, state, false),
-    do: is_met?({:nand, list}, state)
+    do: is_met?({:nand, digest(list, state)}, state)
 
   defp digest({:or, list}, state, false),
-    do: is_met?({:or, list}, state)
+    do: is_met?({:or, digest(list, state)}, state)
 
   defp digest({:nor, list}, state, false),
-    do: is_met?({:nor, list}, state)
+    do: is_met?({:nor, digest(list, state)}, state)
 
   defp digest({:xnor, list}, state, false),
-    do: is_met?({:xnor, list}, state)
+    do: is_met?({:xnor, digest(list, state)}, state)
 
   defp digest({:xor, list}, state, false),
-    do: is_met?({:xor, list}, state)
+    do: is_met?({:xor, digest(list, state)}, state)
 
   defp digest({key, value}, state, false),
     do: {digest(key, state), digest(value, state)}
