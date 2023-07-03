@@ -58,6 +58,16 @@ defmodule BrimstoneConditionalTest do
     end
 
     test "not returns the negation of the condition" do
+      assert Conditional.evaluate(%Conditional{not: false}) == true
+      assert Conditional.evaluate(%Conditional{not: true}) == false
+    end
+
+    test "not supports nesting structures" do
+      assert Conditional.evaluate(%Conditional{not: {:and, [true, true]}}) == false
+      assert Conditional.evaluate(%Conditional{not: {:and, [true, false]}}) == true
+    end
+
+    test "not supports lists" do
       assert Conditional.evaluate(%Conditional{not: [true]}) == false
     end
 
